@@ -1,15 +1,13 @@
 package pl.khayn.dev.spring6webapp.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.springframework.scheduling.support.SimpleTriggerContext;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -27,7 +25,10 @@ public class Publisher {
 
     private String state;
 
-    private String zip;
+    private String zipCode;
+
+    @OneToMany(mappedBy = "publisher")
+    private Set<Book> books = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
@@ -52,7 +53,7 @@ public class Publisher {
                 .append("address", address)
                 .append("city", city)
                 .append("state", state)
-                .append("zip", zip)
+                .append("zip", zipCode)
                 .toString();
     }
 

@@ -24,36 +24,44 @@ public class BootstrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        Publisher publisher = new Publisher();
+        publisher.setPublisherName("Publisher 1");
+        Publisher publisherSaved = publisherRepository.save(publisher);
+
         Author eric = new Author();
         eric.setFirstName("Eric");
         eric.setLastName("Evans");
+        Author ericSaved = authorRepository.save(eric);
 
         Book ddd = new Book();
         ddd.setTitle("Domain Driven Design");
         ddd.setIsbn("123456");
-
-        eric.getBooks().add(ddd);
-        ddd.getAuthors().add(eric);
-
-        Author ericSaved = authorRepository.save(eric);
         Book dddSaved = bookRepository.save(ddd);
+
+        ericSaved.getBooks().add(dddSaved);
+        authorRepository.save(ericSaved);
+
+        dddSaved.getAuthors().add(ericSaved);
+        dddSaved.setPublisher(publisherSaved);
+        bookRepository.save(dddSaved);
 
         Author rod = new Author();
         rod.setFirstName("Rod");
         rod.setLastName("Johnson");
+        Author rodSaved = authorRepository.save(rod);
 
         Book noEJB = new Book();
         noEJB.setTitle("J2EE Development without EJB");
         noEJB.setIsbn("5462144");
-
-        Author rodSaved = authorRepository.save(rod);
         Book noEJBSaved = bookRepository.save(noEJB);
 
+        rodSaved.getBooks().add(noEJBSaved);
+        authorRepository.save(rodSaved);
 
-        Publisher publisher = new Publisher();
-        publisher.setPublisherName("Publisher 1");
+        noEJBSaved.getAuthors().add(rodSaved);
+        noEJBSaved.setPublisher(publisherSaved);
+        bookRepository.save(noEJBSaved);
 
-        publisherRepository.save(publisher);
 
         log.info("in Bootstrap");
         log.info("Author Count: " + authorRepository.count());

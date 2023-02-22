@@ -1,7 +1,6 @@
 package pl.khayn.dev.spring6webapp.domain;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
